@@ -30,11 +30,11 @@ This project simulates a secure e-commerce data platform that automatically inge
 
 ## 📈 Project Roadmap & Status
 
-- [x] Repository initialized & architecture planned
-- [ ] Local Python ingestion script & API connection
-- [ ] Core PII Masking and Data Validation logic suites
-- [ ] AWS CDK Infrastructure definition & IAM least-privilege scoping
-- [ ] Unit testing implementation & GitHub Actions CI/CD setup
+- [X] Repository initialized & architecture planned
+- [X] Local Python ingestion script & API connection
+- [X] Core PII Masking and Data Validation logic suites
+- [X] AWS CDK Infrastructure definition & IAM least-privilege scoping
+- [X] Unit testing implementation & GitHub Actions CI/CD setup
 
 ---
 *Developed as a showcase of secure, enterprise-grade cloud data engineering patterns.*

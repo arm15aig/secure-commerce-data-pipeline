@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "username": "johnd",
+        "masked_email": "142d78e466cacab37c3751a6ba0d288ce40db609ce9c49617ea6b24665f1aa9c",
+        "region": {
+            "city": "kilcoole",
+            "zipcode": "12926-3874"
+        }
+    },
+    {
+        "id": 2,
+        "username": "mor_2314",
+        "masked_email": "a9a9472fa0f02b5ebd0873ac40223cb4793185483419c3747a527c3e2e1d96c2",
+        "region": {
+            "city": "kilcoole",
+            "zipcode": "12926-3874"
+        }
+    },
+    {
+        "id": 3,
+        "username": "kevinryan",
+        "masked_email": "cc4bc25b37d1040714778d80b888d3169a1652932b8603cc2be5c014cfa85301",
+        "region": {
+            "city": "Cullman",
+            "zipcode": "29567-1452"
+        }
+    },
+    {
+        "id": 4,
+        "username": "donero",
+        "masked_email": "e892e2dcd5dea5ac53db8ed890c67948765933ce8b90d85a2e91c2c4565494c0",
+        "region": {
+            "city": "San Antonio",
+            "zipcode": "98234-1734"
+        }
+    },
+    {
+        "id": 5,
+        "username": "derek",
+        "masked_email": "3d11d24f045ff5bf7943c062a40551ad69083a36873abd96701feca0aeed3ffa",
+        "region": {
+            "city": "san Antonio",
+            "zipcode": "80796-1234"
+        }
+    },
+    {
+        "id": 6,
+        "username": "david_r",
+        "masked_email": "f462bfa60007d3cf5d545e005d9b87853888bd4a653a23f4dc0374db0b14bd4a",
+        "region": {
+            "city": "el paso",
+            "zipcode": "12346-0456"
+        }
+    },
+    {
+        "id": 7,
+        "username": "snyder",
+        "masked_email": "c53164eb88514d78f4a6429ca5b9b228f6b2b4bbe940c8c9a63edcd2c66210bf",
+        "region": {
+            "city": "fresno",
+            "zipcode": "96378-0245"
+        }
+    },
+    {
+        "id": 8,
+        "username": "hopkins",
+        "masked_email": "8cc3643845cb8df095bed9e81fdc3f3c55672bf6799d6378f6fa273de83becd9",
+        "region": {
+            "city": "mesa",
+            "zipcode": "96378-0245"
+        }
+    },
+    {
+        "id": 9,
+        "username": "kate_h",
+        "masked_email": "aef88eccce0a70de2c726af3434b10db9223781625070b17ae6e1f6b5a64fbb1",
+        "region": {
+            "city": "miami",
+            "zipcode": "96378-0245"
+        }
+    },
+    {
+        "id": 10,
+        "username": "jimmie_k",
+        "masked_email": "f9aaeef9b7e04a626e7f14258ceffb3a7e5618df242b5d5cae6099f468baf117",
+        "region": {
+            "city": "fort wayne",
+            "zipcode": "10256-4532"
+        }
+    }
+]

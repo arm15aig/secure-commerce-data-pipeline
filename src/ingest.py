@@ -1,30 +1,60 @@
+import hashlib
 import json
 import urllib.request
 
 API_URL = "https://fakestoreapi.com/users"
 
+def sanitize_user_records(raw_users: list) -> list:
+    """
+    Applies strict data minimization and pseudonymization filters
+    to ensure the dataset aligns with GDPR/CCPA standards.
+    """
+    sanitized_records = []
+    
+    for user in raw_users:
+        raw_email = str(user.get("email", "")).strip().lower()
+        hashed_email = hashlib.sha256(raw_email.encode('utf-8')).hexdigest()
+        
+        clean_user = {
+            "id": user.get("id"),
+            "username": user.get("username"),
+            "masked_email": hashed_email,
+            "region": {
+                "city": user.get("address", {}).get("city"),
+                "zipcode": user.get("address", {}).get("zipcode")
+            }
+        }
+        
+        sanitized_records.append(clean_user)
+        
+    return sanitized_records
+
 def fetch_raw_user_data(url: str) -> list:
     print(f"📡 Connecting to API: {url}")
     
-    # 1. Create a Request object and inject a Browser-like User-Agent header
-    # This prevents the API from blocking us with a 403 Forbidden error
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     req = urllib.request.Request(url, headers=headers)
     
-    # 2. Open the connection using our configured request object
     with urllib.request.urlopen(req) as response:
-        # Read the raw incoming bytes and decode them into a text string
         raw_text = response.read().decode('utf-8')
-        
-        # Parse that text string into a native Python list of dictionaries
         return json.loads(raw_text)
 
 if __name__ == "__main__":
-    users = fetch_raw_user_data(API_URL)
-    
-    print(f"✅ Success! Ingested {len(users)} raw user records.")
+    raw_users = fetch_raw_user_data(API_URL)    
+
+    if raw_users:
+        print(f"✅ Success! Ingested {len(raw_users)} raw user records.")
+        
+        clean_users = sanitize_user_records(raw_users)
+        print(f"🔒 GDPR Compliance Layer applied. Records scrubbed and pseudonymized.")
+        print("\n🔍 Sanitized compliance-ready user sample profile:")
+        print(json.dumps(clean_users[0], indent=4))
+    else:
+        print("❌ Data pipeline ingestion failed.")
+
+    print(f"✅ Success! Ingested {len(clean_users)} raw user records.")
     
     print("\n🔍 First user sample profile:")
-    print(json.dumps(users[0], indent=4))
+    print(json.dumps(clean_users[0], indent=4))

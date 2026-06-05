@@ -1,6 +1,7 @@
 import hashlib
 import json
 import urllib.request
+import urllib.error
 
 API_URL = "https://fakestoreapi.com/users"
 
@@ -36,7 +37,29 @@ def fetch_raw_user_data(url: str) -> list:
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     req = urllib.request.Request(url, headers=headers)
-    
+
+    try:
+        with urllib.request.urlopen(req, timeout=10) as response: 
+            raw_text = response.read().decode('utf-8')
+            return json.loads(raw_text)
+            
+    except urllib.error.HTTPError as e:
+        # Catches server-side errors (4xx, 5xx)
+        print(f"❌ API Server Error encountered! Status Code: {e.code}, Reason: {e.reason}")
+        return []
+        
+    except urllib.error.URLError as e:
+        # Catches network/routing errors (DNS failure, offline)
+        print(f"❌ Network Connectivity Error! Reason: {e.reason}")
+        return []
+        
+    except Exception as e:
+        # Catch-all safety net for any other unexpected bugs (e.g., JSON parsing failure)
+        print(f"❌ Unexpected application error: {str(e)}")
+        return []
+
+
+
     with urllib.request.urlopen(req) as response:
         raw_text = response.read().decode('utf-8')
         return json.loads(raw_text)

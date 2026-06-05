@@ -34,7 +34,7 @@ This project simulates a secure e-commerce data platform that automatically inge
 - [X] Local Python ingestion script & API connection
 - [X] Core PII Masking and Data Validation logic suites
 - [X] AWS CDK Infrastructure definition & IAM least-privilege scoping
-- [ ] Unit testing implementation & GitHub Actions CI/CD setup
+- [X] Unit testing implementation & GitHub Actions CI/CD setup
 
 ---
 *Developed as a showcase of secure, enterprise-grade cloud data engineering patterns.*

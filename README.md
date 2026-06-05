@@ -30,9 +30,9 @@ This project simulates a secure e-commerce data platform that automatically inge
 
 ## 📈 Project Roadmap & Status
 
-- [x] Repository initialized & architecture planned
-- [ ] Local Python ingestion script & API connection
-- [ ] Core PII Masking and Data Validation logic suites
+- [X] Repository initialized & architecture planned
+- [X] Local Python ingestion script & API connection
+- [X] Core PII Masking and Data Validation logic suites
 - [ ] AWS CDK Infrastructure definition & IAM least-privilege scoping
 - [ ] Unit testing implementation & GitHub Actions CI/CD setup
 

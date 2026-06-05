@@ -1,5 +1,7 @@
 import hashlib
 import json
+import os
+import boto3
 import urllib.request
 import urllib.error
 
@@ -58,26 +60,52 @@ def fetch_raw_user_data(url: str) -> list:
         print(f"❌ Unexpected application error: {str(e)}")
         return []
 
+def lambda_handler(event, context):
+    print("Cloud execution triggered via AWS EventBridge Scheduler.")
 
+    try:
+        raw_users = fetch_raw_user_data(API_URL)
+        if not raw_users:
+            raise RuntimeError("Pipeline stopped: No records recovered from the target API.")
+            
+        clean_users = sanitize_user_records(raw_users)
 
-    with urllib.request.urlopen(req) as response:
-        raw_text = response.read().decode('utf-8')
-        return json.loads(raw_text)
+        bucket_name = os.environ.get('BUCKET_NAME')
+        if not bucket_name:
+            raise ValueError("Critical Configuration Error: BUCKET_NAME environment variable is missing!")
+        
+        s3_client = boto3.client('s3')
+        file_key = "ingested-data/sanitized_users_batch.json"
+        
+        s3_client.put_object(
+            Bucket=bucket_name,
+            Key=file_key,
+            Body=json.dumps(clean_users, indent=4),
+            ContentType='application/json'
+        )
+        
+        print(f"🎉 Success! Securely uploaded batch data to S3 Data Lake: s3://{bucket_name}/{file_key}")
+        return {"statusCode": 200, "body": "Data ingestion complete."}
+    
+    except Exception as e:
+        print(f"❌ Critical Pipeline Failure: {str(e)}")
+        raise e
 
 if __name__ == "__main__":
+    print("Running pipeline in local development mode...")
     raw_users = fetch_raw_user_data(API_URL)    
 
     if raw_users:
         print(f"✅ Success! Ingested {len(raw_users)} raw user records.")
-        
         clean_users = sanitize_user_records(raw_users)
         print(f"🔒 GDPR Compliance Layer applied. Records scrubbed and pseudonymized.")
+
+        os.makedirs('data', exist_ok=True)
+        with open('data/sanitized_users.json', 'w') as f:
+            json.dump(clean_users, f, indent=4)
+            
+        print("💾 Progress saved locally to data/sanitized_users.json")
         print("\n🔍 Sanitized compliance-ready user sample profile:")
         print(json.dumps(clean_users[0], indent=4))
     else:
-        print("❌ Data pipeline ingestion failed.")
-
-    print(f"✅ Success! Ingested {len(clean_users)} raw user records.")
-    
-    print("\n🔍 First user sample profile:")
-    print(json.dumps(clean_users[0], indent=4))
+        print("❌ Local data pipeline ingestion failed.")
